@@ -42,7 +42,7 @@ clock = pygame.time.Clock()
 
 is_game_running = True
 is_winner = False
-#sound_back.play()
+sound_back.play()
 winner = None
 while is_game_running:
     window.blit(background, (0, 0))
