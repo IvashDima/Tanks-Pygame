@@ -89,7 +89,7 @@ cors = (SCREEN_WIDTH // 2 - winner1_text.get_width() // 2,
 
 while is_winner:
     window.blit(background, (0, 0))
-    sound_win.play()
+    sound_win.play(loops=0, maxtime=0, fade_ms=0)
     if winner == 1:
         window.blit(winner1_text, cors)
     elif winner == 2:

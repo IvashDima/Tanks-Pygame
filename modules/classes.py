@@ -58,14 +58,42 @@ class Panzar(pygame.Rect):
         self.image = None
         self.pos = [x, y]
         self.bullet = Bullet(x, y)
-
         self.angle = 0
 
     def move(self):
-        sound_move = pygame.mixer.Sound(os.path.join(DIR_PATH, 'sounds', 'move.mp3'))
-        if True:
-            sound_move.play()
         pass
+
+    def move_voice(self):
+        sound_move = pygame.mixer.Sound(os.path.join(DIR_PATH, 'sounds', 'move.mp3'))
+        sound_move.play(loops=0, maxtime=200, fade_ms=0)
+
+    def up(self):
+        self.move_voice()
+        if map[self.pos[1] - 1][self.pos[0]] == 0:
+            self.y -= STEP
+            self.pos[1] -= 1
+        self.rotate_to(0)
+
+    def down(self):
+        self.move_voice()
+        if map[self.pos[1] + 1][self.pos[0]] == 0:
+            self.y += STEP
+            self.pos[1] += 1
+        self.rotate_to(180)
+
+    def left(self):
+        self.move_voice()
+        if map[self.pos[1]][self.pos[0] - 1] == 0:
+            self.x -= STEP
+            self.pos[0] -= 1
+        self.rotate_to(90)
+
+    def right(self):
+        self.move_voice()
+        if map[self.pos[1]][self.pos[0] + 1] == 0:
+            self.x += STEP
+            self.pos[0] += 1
+        self.rotate_to(270)
 
     def blit(self):
         self.move()
@@ -95,27 +123,16 @@ class Player1(Panzar):
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
-            if map[self.pos[1] - 1][self.pos[0]] == 0:
-                self.y -= STEP
-                self.pos[1] -= 1
-            self.rotate_to(0)
+            self.up()
         elif keys[pygame.K_s]:
-            if map[self.pos[1] + 1][self.pos[0]] == 0:
-                self.y += STEP
-                self.pos[1] += 1
-            self.rotate_to(180)
+            self.down()
         elif keys[pygame.K_a]:
-            if map[self.pos[1]][self.pos[0] - 1] == 0:
-                self.x -= STEP
-                self.pos[0] -= 1
-            self.rotate_to(90)
+            self.left()
         elif keys[pygame.K_d]:
-            if map[self.pos[1]][self.pos[0] + 1] == 0:
-                self.x += STEP
-                self.pos[0] += 1
-            self.rotate_to(270)
+            self.right()
         elif keys[pygame.K_z]:
             self.strike()
+
 
 class Player2(Panzar):
     def __init__(self, x, y):
@@ -126,24 +143,12 @@ class Player2(Panzar):
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            if map[self.pos[1] - 1][self.pos[0]] == 0:
-                self.y -= STEP
-                self.pos[1] -= 1
-            self.rotate_to(0)
+            self.up()
         elif keys[pygame.K_DOWN]:
-            if map[self.pos[1] + 1][self.pos[0]] == 0:
-                self.y += STEP
-                self.pos[1] += 1
-            self.rotate_to(180)
+            self.down()
         elif keys[pygame.K_LEFT]:
-            if map[self.pos[1]][self.pos[0] - 1] == 0:
-                self.x -= STEP
-                self.pos[0] -= 1
-            self.rotate_to(90)
+            self.left()
         elif keys[pygame.K_RIGHT]:
-            if map[self.pos[1]][self.pos[0] + 1] == 0:
-                self.x += STEP
-                self.pos[0] += 1
-            self.rotate_to(270)
+            self.right()
         elif keys[pygame.K_m]:
             self.strike()
